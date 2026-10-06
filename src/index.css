@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME DESIGN TOKENS
+   Light theme is the default. The `.dark` class is toggled on
+   <html> by the Theme Provider (see useThemeStore.ts).
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --surface-elevated: #f1f5f9;
+  --foreground: #0f172a;
+  --border: #e2e8f0;
+  --muted: #64748b;
+
+  /* Brand + status (consistent across themes) */
+  --brand: #6366f1;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Surfaces — dark palette from the design spec */
+  --background: #0f172a;
+  --surface: #111827;
+  --surface-elevated: #1e293b;
+  --foreground: #f8fafc;
+  --border: #1e293b;
+  --muted: #94a3b8;
+
+  --brand: #6366f1;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+html {
+  background-color: var(--background);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* Smooth, theme-aware 300ms transition for common UI surfaces.
+   Scoped to elements that opt in via `.theme-transition` to avoid
+   interfering with interactive hover/press animations elsewhere.
+   Respects users who prefer reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transition,
+  .theme-transition * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.25);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.45);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
